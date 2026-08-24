@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useDarkMode } from "../../../hooks/darkMode/useDarkMode.ts";
 import useInactivityLogout from "src/hooks/admin/actividad/useInactivityLogout.ts";
+import { Link } from "react-router-dom";
 
 async function logout() {
 
@@ -117,11 +118,13 @@ const Sidebar = () => {
         <ul className="space-y-3">
           {items.map((item, index) => {
             const isActive = currentPath === item.path;
-
+//  <Link to="/admin/layout-admin/inicio" style={{ color: '#fff' }}>Inicio</Link>
+//           <Link to="/admin/layout-admin/productos" style={{ color: '#fff' }}>Productos</Link>
             return (
               <li key={index}>
-                <a
-                  href={item.path}
+                
+                <Link
+                  to={item.path}
                   className={`flex items-center px-4 py-2.5 rounded-xl transition-all duration-300 group relative ${isActive
                     ? "bg-[#E6F7F9] dark:bg-teal-900 text-[#0f2c59] dark:text-teal-100 font-bold shadow-sm"
                     : "text-[#0f2c59] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium"
@@ -136,7 +139,7 @@ const Sidebar = () => {
                     {item.icon}
                   </div>
                   {item.name}
-                </a>
+                </Link>
               </li>
             );
           })}

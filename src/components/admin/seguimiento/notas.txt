@@ -1,0 +1,2 @@
+El archivo modal de seguimientoTable para crear un 
+cliente esta afuera del todo en AddDataModel.tsx - no se entiende arreglar nombre

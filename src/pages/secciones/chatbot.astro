@@ -1,0 +1,8 @@
+---
+import LayoutAdmin from "../../layouts/LayoutAdmin.astro";
+import ChatbotTable from "../../components/admin/chatbot/chatbotTable";
+---
+<LayoutAdmin title="CHATBOT">
+    <!-- <chatbotTable/> nunca se lee ,no esta importando, no es nada ,ni le pertenece a astro porque que no lo reconoce astro  -->
+    <ChatbotTable client:only="react"/>
+</LayoutAdmin>

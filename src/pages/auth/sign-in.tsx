@@ -48,7 +48,7 @@ const SignIn: React.FC = () => {
 
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
-        window.location.href = "/admin/inicio";
+        window.location.href = "/admin/productos";
       } else {
         Swal.fire({
           icon: "error",
