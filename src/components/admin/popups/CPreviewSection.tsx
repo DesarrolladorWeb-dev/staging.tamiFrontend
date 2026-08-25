@@ -1,4 +1,5 @@
 // ---
+import { useState } from "react";
 import ScrollModal from "../../ui/ScrollModal.tsx";
 // ---
 
@@ -110,8 +111,14 @@ import ScrollModal from "../../ui/ScrollModal.tsx";
 
 
 ` }} />
+interface CPreviewSectionProps {
+  activeTab: 'popups' | 'whatsapp' | 'correo';
+}
 
-function CPreviewSection() {
+function CPreviewSection({ activeTab }: CPreviewSectionProps) {
+    
+    const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
+
   return (
     
 <>
@@ -123,14 +130,21 @@ function CPreviewSection() {
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
                 Vista Previa
             </h2>
+
+            {activeTab === 'popups' && (
             <div
                 id="previewModesToggle"
                 className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg"
             >
-                <button
-                    id="btnDesktop"
-                    className="px-3 py-1.5 text-sm font-medium rounded-md bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm transition-all hidden lg:flex items-center gap-2"
-                >
+               <button
+                type="button"
+                onClick={() => setViewMode('desktop')}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all hidden lg:flex items-center gap-2 ${
+                  viewMode === 'desktop'
+                    ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                }`}
+              >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4"
@@ -147,10 +161,15 @@ function CPreviewSection() {
                     </svg>
                     Escritorio
                 </button>
-                <button
-                    id="btnMobile"
-                    className="px-3 py-1.5 text-sm font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all flex items-center gap-2"
-                >
+               <button
+                type="button"
+                onClick={() => setViewMode('mobile')}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all flex items-center gap-2 ${
+                  viewMode === 'mobile'
+                    ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                }`}
+              >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4"
@@ -168,12 +187,21 @@ function CPreviewSection() {
                     Móvil
                 </button>
             </div>
+             )}
         </div>
 
+            {/* Deberia ser movil pero como que no funciona */}
         <div
+          id="previewStage"
+          className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-center items-center relative min-h-[550px] transition-all duration-300 overflow-hidden ${
+            viewMode === 'mobile' ? 'is-mobile-view' : ''
+          }`}
+        >
+        {/* <div
             id="previewStage"
             className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-center items-center relative min-h-[550px] transition-all duration-300 overflow-hidden"
-        >
+        > */}
+
             {/* <!-- Fondo oscuro (oculto por defecto) --> */}
             <div
                 id="previewOverlay"
@@ -182,18 +210,21 @@ function CPreviewSection() {
             </div>
 
             {/* <!-- CONTENEDOR RELATIVO --> */}
+
+            {activeTab === 'popups' && (
             <div
                 id="previewScrollModalContainer"
                 className="relative z-10 w-full min-h-[550px] flex justify-center items-center transition-all duration-300"
             >
                 <ScrollModal  isPreview={true} />
             </div>
+            )}
 
             {/* <!-- ================= WHATSAPP REALISTIC PREVIEW ================= --> */}
-
+{activeTab === 'whatsapp' && (
             <div
                 id="previewWhatsapp"
-                className="hidden absolute inset-0 flex justify-center items-center z-20 overflow-hidden"
+                className=" absolute inset-0 flex justify-center items-center z-20 overflow-hidden"
             >
                 <div
                     className="bg-[#e5ddd5] dark:bg-[#0b141a] rounded-xl shadow-2xl w-[320px] h-[500px] flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700 relative scale-90 sm:scale-100 transition-colors duration-300"
@@ -295,11 +326,12 @@ function CPreviewSection() {
                     </div>
                 </div>
             </div>
-
+)}
             {/* <!-- ================= CORREO REALISTIC PREVIEW ================= --> */}
+{activeTab === 'correo' && (
             <div
                 id="previewCorreo"
-                className="hidden absolute inset-0 bg-white dark:bg-gray-900 z-20 flex flex-col overflow-hidden"
+                className=" absolute inset-0 bg-white dark:bg-gray-900 z-20 flex flex-col overflow-hidden"
             >
                 {/* <!-- Header de correo similar a Gmail --> */}
                 <div
@@ -488,6 +520,7 @@ function CPreviewSection() {
                     </div>
                 </div>
             </div>
+        )}
         </div>
     </div>
 </div>

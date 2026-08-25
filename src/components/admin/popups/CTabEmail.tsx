@@ -9,7 +9,7 @@ function CTabEmail() {
   return (
     
 
-<div id="contentCorreo" className="hidden space-y-6">
+<div id="contentCorreo" className=" space-y-6">
     {/* <!-- Selector de Correo --> */}
     <div
         className="p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-800/30 flex flex-col sm:flex-row items-center gap-4"

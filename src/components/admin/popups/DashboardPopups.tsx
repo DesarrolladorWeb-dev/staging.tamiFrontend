@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import TabPopups from "../popups/CTabPopups.tsx";
-import TabWhatsapp from "../popups/CTabWhatsapp.tsx"; //lo pude como astro ?
+import TabWhatsapp from "../popups/CTabWhatsapp.tsx"; 
 import TabEmail from "../popups/CTabEmail.tsx";
 import TabProducto from "../popups/TabProducto.tsx";
 import PreviewSection from "../popups/CPreviewSection.tsx";
+
+import { initPopupManager } from "src/scripts/admin/popupsManager";
+
+
+
+
 function DashboardPopups() {
+
+  // 1. Definir estados para la navegación principal y las subpestañas
+  const [mainTab, setMainTab] = useState<'inicio' | 'producto'>('inicio');
+  const [subTab, setSubTab] = useState<'popups' | 'whatsapp' | 'correo'>('popups');
+
+  useEffect(() => {
+    initPopupManager();
+  }, []);
+
   return (
     <>
 <div
@@ -58,73 +73,95 @@ function DashboardPopups() {
                 >
                     {/* <!-- Top Level: Inicio / Producto --> */}
                     <div className="flex gap-4 mb-6 pb-2">
-                        <button
-                            id="navInicio"
-                            className="px-6 py-2 rounded-full bg-teal-600 text-white text-sm font-bold shadow-md transition-all active:scale-95"
-                        >
+                            <button
+                                type="button"
+                                onClick={() => setMainTab('inicio')}
+                                className={`px-6 py-2 rounded-full text-sm font-bold shadow-md 
+                                            transition-all active:scale-95 ${
+                                mainTab === 'inicio' ? 'bg-teal-600 text-white' : 
+                                                        'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                                }`}
+                            >
+                        
                             Inicio
                         </button>
                         <button
-                            id="navProducto"
-                            className="px-6 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-all active:scale-95"
+                            type="button"
+                            onClick={() => setMainTab('producto')}
+                            className={`px-6 py-2 rounded-full text-sm font-bold shadow-md transition-all active:scale-95 ${
+                            mainTab === 'producto' ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                            }`}
                         >
                             Producto
                         </button>
                     </div>
 
-                    {/* <!-- Contenido de las Pestañas --> */}
+                
+            <div className="space-y-6">
+              {/* Sección Inicio */}
+                {mainTab === 'inicio' && (
                     <div className="space-y-6">
-                        {/* <!-- Sección Inicio --> */}
-                        <div id="sectionInicio" className="space-y-6">
-                            {/* <!-- Sub-navegación para Inicio: Pop-ups / WhatsApp / Correo --> */}
-                            <div className="flex gap-2 mb-6 pb-2">
-                                <button
-                                    id="tabPopups"
-                                    className="px-4 py-2 rounded-md bg-teal-600 dark:bg-teal-500 text-white text-sm font-medium shadow-sm transition-all"
-                                >
-                                    Pop-ups
-                                </button>
+                    {/* Botones de Sub-pestañas */}
+                    <div className="flex gap-2 mb-6 pb-2">
+                        <button
+                        type="button"
+                        onClick={() => setSubTab('popups')}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                            subTab === 'popups' ? 'bg-teal-600 text-white' : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400'
+                        }`}
+                        >
+                        Pop-ups
+                        </button>
+                        <button
+                        type="button"
+                        onClick={() => setSubTab('whatsapp')}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                            subTab === 'whatsapp' ? 'bg-teal-600 text-white' : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400'
+                        }`}
+                        >
+                        WhatsApp
+                        </button>
+                        
+                        <button
+                        type="button"
+                        onClick={() => setSubTab('correo')}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                            subTab === 'correo' ? 'bg-teal-600 text-white' : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400'
+                        }`}
+                        >
+                        Correo
+                        </button>
+                    </div>
 
-                                <button
-                                    id="tabWhatsapp"
-                                    className="px-4 py-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-700 dark:hover:text-gray-200 text-sm font-medium transition-all"
-                                >
-                                    WhatsApp
-                                </button>
+                {/* subSecciones Popups , Whasapp y Correo*/}
+                {subTab === 'popups' && (
+                    <div id="containerPopupsInicio">
+                    <TabPopups />
+                    </div>
+                )}
+                {subTab === 'whatsapp' && <TabWhatsapp />}
+                {subTab === 'correo' && <TabEmail />}
+                </div>
 
-                                <button
-                                    id="tabCorreo"
-                                    className="px-4 py-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:text-gray-700 dark:hover:text-gray-200 text-sm font-medium transition-all"
-                                >
-                                    Correo
-                                </button>
-                            </div>
+                )}
 
-                            {/* <!-- Contenido Inicio --> */}
-                            <div id="containerPopupsInicio">
-                                <TabPopups />
-                            </div>
-                            
-                            <TabWhatsapp />
-                            <TabEmail />
-                        </div>
+                {/* Sección Producto */}
+                {mainTab === 'producto' && (
+                    <div className="space-y-8">
+                    <TabProducto />
+                    </div>
+                )}
 
-                        {/* <!-- Sección Producto --> */}
-                        <div id="sectionProducto" className="hidden space-y-8">
-                            <TabProducto/>
-                        </div>
-
-                        {/* <!-- Botón de Guardar (Compartido) --> */}
-                        <div id="sharedSaveFooter" className="mt-8 flex flex-col gap-2">
-                            <p
+                    {/* Botón Guardar */}
+                    <div id="sharedSaveFooter" className="mt-8 flex flex-col gap-2">
+                          <p
                                 id="popupStatus"
                                 className="text-sm text-gray-600 dark:text-gray-300"
                                 role="status"
                                 aria-live="polite"
-                            >
-                            </p>
-                            <div className="flex justify-center lg:justify-end">
-                                <button
+                            />
+                        <div className="flex justify-center lg:justify-end">
+                         <button
                                     type="button"
                                     id="btnGuardarPopups"
                                     className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors disabled:opacity-50"
@@ -136,7 +173,7 @@ function DashboardPopups() {
                     </div>
                 </div>
 
-                <PreviewSection />
+                <PreviewSection activeTab={subTab} />
             </div>
         </div>
     </div>
@@ -144,6 +181,8 @@ function DashboardPopups() {
 
     </>
   )
+ 
+
 }
 
 export default DashboardPopups

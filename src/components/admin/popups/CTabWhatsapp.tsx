@@ -6,16 +6,16 @@ import TimePicker from "./TimePicker.tsx";
 import React from 'react'
 
 function CTabWhatsapp() {
+
   return (
+
+
 <>
-
-
-
 
 <form>
 <div
     id="contentWhatsapp"
-    className="hidden space-y-8"
+    className=" space-y-8"
 >
     {/* <!-- Selector de Mensaje --> */}
     <div className="flex flex-col gap-3 p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
