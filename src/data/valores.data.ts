@@ -1,6 +1,6 @@
 import imgResponsabilidad from "@images/about/card_mujer.webp";
 import imgCalidad from "@images/about/card_gerente.webp";
-import imgTranspariencia from "@images/about/card_profesionales.webp";
+import imgTransparencia from "@images/about/card_profesionales.webp";
 import imgCompromiso from "@images/about/card_personas.webp";
 
 const valoresArray = [
@@ -17,8 +17,8 @@ const valoresArray = [
     imageTitle: "Calidad de servicio",
   },
   {
-    image: imgTranspariencia,
-    title: "TRANSPARIENCIA",
+    image: imgTransparencia,
+    title: "TRANSPARENCIA",
     paragraph: "En nuestras acciones y procesos.",
     imageTitle: "Transparencia",
   },
